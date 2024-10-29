@@ -22,6 +22,89 @@ its vectorized form is defined as follow:
 
 $$h(\textbf{x}) = f(\theta^T \textbf{x})$$
 
-$g(\cdot)$ is the logistic function that activates the hypothesis function to outcome in a number between 0 and 1 and defined as follow:
+$f(\cdot)$ is the logistic function that activates the hypothesis function to outcome in a number between 0 and 1 and defined as follow:
 
-$$g(u) := \frac{1}{1+e^{-u}}$$
+$$f(z) := \frac{1}{1+e^{-z}}$$
+
+<div align='center'><img src="input/sigmoid.png"/><br />Fig. 1 - Sigmoid function graph</div>
+<br /><br />
+
+The logistic function is a sigmoid form that takes the value 0.5 as the threshold value when z = 0 to outcome its predictions. In part. with positive input, the function will produce a probability greater than 0.5 (i.e. predicting it as the positive class) whereas with negative input the negative class will be predicted.
+
+$$\hat{y} =
+  \begin{cases}
+    1       & \quad \text{if } h(\textbf{x}) \geq 0.5\\
+    0       & \quad \text{otherwise } 
+  \end{cases}$$
+
+Then we need to evaluate the performance of the model before applying gradient descent method to optimize the parameters of it. Let's bound to loss function.
+
+## Loss function
+The loss function for a logistic regression model is defined as follow:
+
+$$l({\theta}) =
+  \begin{cases}
+    -\text{log}(h(\textbf{x}))       & \quad \text{if} \ y = 1\\
+    -\text{log}(1-h(\textbf{x}))     & \quad \text{if} \ y = 0 
+  \end{cases}$$
+
+We try to understanding why these functions are chosen.<br /><br />
+
+<div align='center'><img src="input/cost_function.png"/><br />Fig. 2 - Cost function graph for a single training input</div>
+<br /><br />
+
+If the input belongs to the positive class ($-\text{log}(h(\textbf{x}))$ graph), as the forecast comes close to 0 (we make a wrong prediction), the loss function goes to infinity. Similarly, if the inputt belongs to the negative class ($-\text{log}(1-h(\textbf{x}))$ graph), as the forecast comes close to the positive it (wrong prediction), the model will be punished (infinitive cost).
+
+We determine the loss function for the model that can be expressed in a following formula:
+
+$$L(\theta) = -\frac{1}{m} \sum_{i=1}^m [y^{(i)}\text{ log}(h(x^{(i)})) + (1-y^{(i)}) \text{ log}(1-h(x^{(i)}))]$$
+
+where
+- $\theta$ are the inputs of the loss function
+- $m$ is the number if instances
+- $x_i$ is the input (features) of i-th training example
+- $y_i$ is the output (features) of i-th training example
+
+The meaning of this equation is to compute the average cost over all the training sets; the adding of the terms y and (1-y) guarantees to use of the formula based on the original output. The model is good if and only if its loss function is small. 
+Our goal is to determine the model’s parameter vector to minimize the loss function by using the gradient descent algorithm.
+
+## Gradient descent algorithm in logistic regression model
+The algorithm will update the theta values after each iteration and the model will fits to try to find the global minimum of the loss function. In particular the gradient descent algorithm updates the model theta values iteratively by moving in the direction opposite to the gradient of the loss function. So, with each step of gradient descent, the theta values come closer to the optimal values that will achieve the lowest loss.
+
+$$\text{repeat until convergence}$$ $$\theta_j := \theta_j - \alpha \frac{\partial}{\partial{\theta_j}} L(\theta_1, \theta_2, \dotsc \theta_n)$$ $$\text{simultaneously update } \theta_j$$ $$\forall j = 0, 1, \dotsc, n$$
+
+$\alpha$ is the _learning rate_ (or step size) of the algorithm (i.e. controls the rate at which the model learns). Choosing an opportune learning rate is important as it will ensure the loss function will converge in a reasonable time: if the model is failed to converge ($\alpha$ too large) or if it takes too much time to find its minimum ($\alpha$ too small), implies that our learning rate is probably a inappropriate choice.
+
+After taking partially differentiate of the loss function the algorithm becomes:
+
+$$\text{repeat until convergence}$$ $$\theta_j := \theta_j - \frac{1}{m} \sum_{i=1}^m [g(\theta^T x^{(i)})-y^{(i)}]x_j^{(i)}$$ $$\text{simultaneously update } \theta_j$$ $$\forall j = 0, 1, \dotsc, n$$
+
+where $x_j^{(i)}$ is the value of feature _j_ in i-th training example.
+
+Instead of calculating each single theta, we can generate the gradient vector to compute them in just one step. The formula of gradient vector for the loss function is defined as follow:
+
+$$\nabla_\theta L(\theta) = 
+    \begin{bmatrix}
+        \frac{\partial}{\partial{\theta_0}} L(\theta_0) \\
+        \frac{\partial}{\partial{\theta_1}} L(\theta_1) \\
+        \frac{\partial}{\partial{\theta_2}} L(\theta_2) \\
+        \vdots \\
+        \frac{\partial}{\partial{\theta_n}} L(\theta_n)
+    \end{bmatrix} = 
+    \frac{1}{m} \textbf{X}^T (g(\textbf{X}\theta) - y)
+$$
+
+where $\textbf{X}$ is the matrix containing all the values in the dataset (exclude the values of the outcomes) 
+
+$$\textbf{X} = 
+    \begin{bmatrix}
+        (x^{(0)})^T \\
+        (x^{(1)})^T \\
+        (x^{(2)})^T \\
+        \vdots \\
+        (x^{(n)})^T
+    \end{bmatrix}$$
+
+Lastly, the updated theta values, utilizing the gradient descent algorithm, are defined by following formula:
+
+$$\theta_{\text{updated}} = \theta - \alpha \nabla_\theta L(\theta)$$
