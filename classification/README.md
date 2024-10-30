@@ -7,15 +7,17 @@ We'll deal with the classification task, implementing its simplest form known as
 
 A technique for solving a binary classification task is logistic regression.
 
+&nbsp;
+
 ## Logistic regression
 Logistic regression provides a probabilistic framework for understanding and predicting binary outcomes. It computes a weighted sum of the input features (as the linear regression does) and estimates the probability that outcome belongs to a specific class (instead of returning a continuous value).
 
-$$h(x) = g(\theta_0 + \theta_1x_1 + \theta_2x_2 + \dotsc + \theta_nx_n)$$
+$$h(x) = f(\theta_0 + \theta_1x_1 + \theta_2x_2 + \dotsc + \theta_nx_n)$$
 
 where
 - $h(x)$ is the hypothesis function
-- $x_1, x_2, \dotsc, x_n$ are the independent variables
-- weights $\theta_0, \theta_1, \theta_2, \dotsc, \theta_n$ are the parameters of the model
+- $x_1, x_2, \dotsc, x_n$ are the independent variables (predictors)
+- weights $\theta_0, \theta_1, \theta_2, \dotsc, \theta_n$ are the parameters (or weights) of the model
 - $n$ is the number of features
 
 its vectorized form is defined as follow:
@@ -27,7 +29,8 @@ $f(\cdot)$ is the logistic function that activates the hypothesis function to ou
 $$f(z) := \frac{1}{1+e^{-z}}$$
 
 <div align='center'><img src="input/sigmoid.png"/><br />Fig. 1 - Sigmoid function graph</div>
-<br /><br />
+
+&nbsp;
 
 The logistic function is a sigmoid form that takes the value 0.5 as the threshold value when z = 0 to outcome its predictions. In part. with positive input, the function will produce a probability greater than 0.5 (i.e. predicting it as the positive class) whereas with negative input the negative class will be predicted.
 
@@ -38,6 +41,8 @@ $$\hat{y} =
   \end{cases}$$
 
 Then we need to evaluate the performance of the model before applying gradient descent method to optimize the parameters of it. Let's bound to loss function.
+
+&nbsp;
 
 ## Loss function
 The loss function for a logistic regression model is defined as follow:
@@ -51,7 +56,8 @@ $$l({\theta}) =
 We try to understanding why these functions are chosen.<br /><br />
 
 <div align='center'><img src="input/cost_function.png"/><br />Fig. 2 - Cost function graph for a single training input</div>
-<br /><br />
+
+&nbsp;
 
 If the input belongs to the positive class ($-\text{log}(h(\textbf{x}))$ graph), as the forecast comes close to 0 (we make a wrong prediction), the loss function goes to infinity. Similarly, if the inputt belongs to the negative class ($-\text{log}(1-h(\textbf{x}))$ graph), as the forecast comes close to the positive it (wrong prediction), the model will be punished (infinitive cost).
 
@@ -62,11 +68,13 @@ $$L(\theta) = -\frac{1}{m} \sum_{i=1}^m [y^{(i)}\text{ log}(h(x^{(i)})) + (1-y^{
 where
 - $\theta$ are the inputs of the loss function
 - $m$ is the number if instances
-- $x_i$ is the input (features) of i-th training example
-- $y_i$ is the output (features) of i-th training example
+- $x^{(i)}$ is the input (features) of i-th training example
+- $y^{(i)}$ is the output (features) of i-th training example
 
-The meaning of this equation is to compute the average cost over all the training sets; the adding of the terms y and (1-y) guarantees to use of the formula based on the original output. The model is good if and only if its loss function is small. 
+The meaning of this equation is to compute the average cost over all the training sets; the adding of the terms $y^{(i)}$ and $(1-y^{(i)})$ guarantees to use of the formula based on the original output. The model is good if and only if its loss function is small. 
 Our goal is to determine the model’s parameter vector to minimize the loss function by using the gradient descent algorithm.
+
+&nbsp;
 
 ## Gradient descent algorithm in logistic regression model
 The algorithm will update the theta values after each iteration and the model will fits to try to find the global minimum of the loss function. In particular the gradient descent algorithm updates the model theta values iteratively by moving in the direction opposite to the gradient of the loss function. So, with each step of gradient descent, the theta values come closer to the optimal values that will achieve the lowest loss.
@@ -77,7 +85,7 @@ $\alpha$ is the _learning rate_ (or step size) of the algorithm (i.e. controls t
 
 After taking partially differentiate of the loss function the algorithm becomes:
 
-$$\text{repeat until convergence}$$ $$\theta_j := \theta_j - \frac{1}{m} \sum_{i=1}^m [g(\theta^T x^{(i)})-y^{(i)}]x_j^{(i)}$$ $$\text{simultaneously update } \theta_j$$ $$\forall j = 0, 1, \dotsc, n$$
+$$\text{repeat until convergence}$$ $$\theta_j := \theta_j - \frac{1}{m} \sum_{i=1}^m [f(\theta^T x^{(i)})-y^{(i)}]x_j^{(i)}$$ $$\text{simultaneously update } \theta_j$$ $$\forall j = 0, 1, \dotsc, n$$
 
 where $x_j^{(i)}$ is the value of feature _j_ in i-th training example.
 
@@ -91,7 +99,7 @@ $$\nabla_\theta L(\theta) =
         \vdots \\
         \frac{\partial}{\partial{\theta_n}} L(\theta_n)
     \end{bmatrix} = 
-    \frac{1}{m} \textbf{X}^T (g(\textbf{X}\theta) - y)
+    \frac{1}{m} \textbf{X}^T (f(\textbf{X}\theta) - y)
 $$
 
 where $\textbf{X}$ is the matrix containing all the values in the dataset (exclude the values of the outcomes) 
