@@ -4,11 +4,12 @@ Regression is a supervised machine learning method where the model tries to pred
 ## Linear approach
 In statistics, linear regression tries to model the relationship between a dependent variable and one or more independent variables. Let X be the independent variable and Y be the dependent variable. The linear relationship between these two variables can be defined as follows:
 
-$$Y = mX + c$$
+$$Y ~ mX + c + u$$
 
 where
 - $m$ is the slope of the line
 - $c$ is the y intercept
+- $u$ is the error term
 
 We will use this equation to train our model with a given dataset and predict the value of $Y$ for any given value of $X$. Our task is to determine the value of $m$ and $c$, such that the line corresponding to those values is the best fitting line or gives the minimum error.
 
