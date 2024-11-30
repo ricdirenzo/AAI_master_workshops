@@ -59,16 +59,32 @@ where:
 - $\textbf{y}$ is a vector of observed values $y_i (i=1, \dots, n)$ of the variable called the target variable or dependent variable
 - $\textbf{X}$ is a matrix of row-vectors $\textbf{x}_i$ or of $n$-dimensional column-vectors $\textbf{x}_j$ which are known as regressors, explanatory variables or independent variables
 - $b$ is a $(p+1)$-dimensional dimensional parameter vector, where $b_0$ is the intercept term and, in simple linear regression, $p=1$, $b_1$ is the regression slope
-- $e$ is a vector of values $e_i$ values which represtent the error term or sometimes is called noise.
+- $e$ is a vector of values $e_i$ or residuals.
 
-In the least-squares setting, the optimum parameter vector is defined as such that minimizes the sum of mean squared loss. 
+The vector of residuals $e$ is given by:
 
-$$ \arg\min_{b} (\textbf{X}b - \textbf{y})^T(\textbf{X}b - \textbf{y}) $$
+$$ e = \textbf{y} - \textbf{X}b $$
 
-As the loss function is convex, the optimum solution lies at gradient zero. The gradient of the loss function is:
+We can write the sum of squared residuals as:
 
-$$ \frac{\partial}{\partial b} (\textbf{X}b - \textbf{y})^T(\textbf{X}b - \textbf{y}) = 0 $$
+$$ e^Te = (\textbf{y} - \textbf{X}b)^T(\textbf{y} - \textbf{X}b) = \textbf{y}^T\textbf{y} - b^T\textbf{X}^T\textbf{y} - \textbf{y}^T\textbf{X}b + b^T\textbf{X}^T\textbf{X}b $$
 
-$$ 2\textbf{X}^T\textbf{X}b -2\textbf{X}^T\textbf{y} = 0$$
+This development uses the fact that $\textbf{y}^T\textbf{X}b = (\textbf{y}^T\textbf{X}b)^T = b^T\textbf{X}^T\textbf{y}$
 
-$$\hat{b}=(\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} $$
+$$ e^Te = \textbf{y}^T\textbf{y} - 2b^T\textbf{X}^T\textbf{y} + b^T\textbf{X}^T\textbf{X}b $$
+
+To find the coefficients that minimizes the sum of squared residuals, we need to take the derivative of $e^Te$ with respect to $b$
+
+$$ \arg\min_{b} e^Te = \frac{\partial}{\partial b} (\textbf{y}^T\textbf{y} - 2b^T\textbf{X}^T\textbf{y} + b^T\textbf{X}^T\textbf{X}b) = 0 $$
+
+$$ 2\textbf{X}^T\textbf{X}b -2\textbf{X}^T\textbf{y} = 0 $$
+
+$$ \textbf{X}^T\textbf{X}b = \textbf{X}^T\textbf{y} $$
+
+If the inverse of $\textbf{X}^T\textbf{X}$ exists, then pre-multiplyng both sides by the inverse gives us the following equation:
+
+$$ (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{X}b = (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} $$
+
+We know that $(\textbf{X}^T\textbf{X})^{-1} \textbf{X}^T\textbf{X} = \textbf{I}$ identity matrix. This gives us:
+
+$$ \hat{b} = (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} $$
