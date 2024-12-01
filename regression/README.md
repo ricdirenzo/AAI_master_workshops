@@ -10,8 +10,8 @@ We consider the following linear model
 $$ y = b_0 + b_1x + e $$
 
 where
-- $m$ is the slope of the line
-- $c$ is the y intercept
+- $b_1$ is the slope of the line
+- $b_0$ is the y intercept
 - $e$ is the error term (residuals)
 
 Our goal is to find estimated values $\hat{b_0}$ and $\hat{b_1}$ for the parameters $b_0$ and $b_1$ which would provide the best fit for the data points.
@@ -39,9 +39,11 @@ $$ = \begin{cases}
 
 from which the following solutions are derived:
 
-$$ \hat{b_1} = \frac{ \sum_{i=1}^n {x_iy_i} - \frac{1}{n} \sum_{i=1}^n {x_i}\sum_{i=1}^n {y_i} }{ \sum_{i=1}^n {x_i^2} - \frac{1}{n} (\sum_{i=1}^n {x_i})^2 } \qquad \hat{b_0} = \mu_y-\hat{b_1}\mu_x$$
+$$ \hat{b_1} = \frac{ \sum_{i=1}^n {x_iy_i} - \frac{1}{n} \sum_{i=1}^n {x_i}\sum_{i=1}^n {y_i} }{ \sum_{i=1}^n {x_i^2} - \frac{1}{n} (\sum_{i=1}^n {x_i})^2 } \qquad \hat{b_0} = \frac{1}{n} \sum_{i=1}^n {y_i} - \frac{\hat{b_1}}{n} \sum_{i=1}^n {x_i}$$
 
-where $\mu_x$ and $\mu_y$ are $\frac{1}{n} \sum_{i=1}^n {x_i}$ and $\frac{1}{n} \sum_{i=1}^n {y_i}$ respectively.
+i.e. 
+
+$$ \hat{b_1} = \frac{ \sigma_{x,y} }{ \sigma_{x}^2 } \qquad \hat{b_0} = \mu_y - \hat{b_1} \mu_x $$
 
 In order to confirm the statistical significance of the choice of coefficients, it is necessary to make some hypotheses known as Gauss–Markov assumptions:
 - $\\{e_1, \dots, e_n\\}$ and $\\{x_1, \dots, x_n\\}$ are independent
