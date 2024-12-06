@@ -1,10 +1,9 @@
 # Linear regression
 In statistics, linear regression is a model that estimates the linear relationship between a scalar response (dependent variable) and one or more explanatory variables (regressor or independent variable).
 
-## Simple linear regression
 Simple linear regression is a linear regression model with a single explanatory variable.
 
-### Formulation
+## OLS Formulation
 We consider the following linear model
 
 $$ y = b_0 + b_1x + e $$
@@ -45,6 +44,20 @@ i.e.
 
 $$ \hat{b_1} = \frac{ \sigma_{x,y} }{ \sigma_{x}^2 } \qquad \hat{b_0} = \mu_y - \hat{b_1} \mu_x $$
 
+&nbsp;
+
+### Coefficient of determination
+The coefficient of determination, knows as "_R squared_" and denoted $R^2$, is a measure of the goodness of fit of a model, i.e. of how well the regression predictions approximate the real data points. An $R^2$ of 1 indicates that the regression predictions perfectly fit the data. It is defined as the proportion of the variation in the dependent variable that is predictable from the independent variable(s).
+
+$$ R^2 = 1 - \frac{ \sum_{i=1}^{n} {e_i^2} }{ \sum_{i=1}^n {(y_i - \mu_y)^2} } = 1 - \frac{ SS_{\text{res}} }{ SS_{\text{tot}} }$$
+
+where:
+- $SS_\text{res}$ is called residual sum of squares
+- $SS_\text{tot}$ is called total sum of squares (proportional to the variance of the data)
+
+&nbsp;
+
+### Gauss–Markov assumptions
 In order to confirm the statistical significance of the choice of coefficients, it is necessary to make some hypotheses known as Gauss–Markov assumptions:
 - $\\{e_1, \dots, e_n\\}$ and $\\{x_1, \dots, x_n\\}$ are independent
 - $\text{E}[e_i]=0$
@@ -52,6 +65,8 @@ In order to confirm the statistical significance of the choice of coefficients, 
 - $\text{Cov}(e_i,e_j)=0 \quad \forall i \neq j$
 
 Under these conditions, the ordinary least squares (OLS) estimator of the coefficients of a linear regression model is the best linear unbiased estimator (_BLUE_).
+
+&nbsp;
 
 Often this formulation are written in matrix notation as:
 
@@ -90,3 +105,26 @@ $$ (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{X}b = (\textbf{X}^T\textbf{X
 We know that $(\textbf{X}^T\textbf{X})^{-1} \textbf{X}^T\textbf{X} = \textbf{I}$ identity matrix. This gives us:
 
 $$ \hat{b} = (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} $$
+
+&nbsp;
+
+## Gradient descent algorithm:
+The objective is to minimize the cost function (Mean Squared Error) using gradient descent. The cost function is given by:
+
+$$ L(b_0,b_1) = \frac{1}{n} \sum_{i=1}^n {(h_b(x^{(i)}) - y^{(i)})^2} $$
+
+where:
+- $h_b(x^{(i)}) = b_0 + b_1x^{(i)}$ is the hypothesis function
+- $n$ is the number of training examples.
+
+The gradients for $b_0$ and $b_1$ are computed as follows:
+
+$$ \frac{\partial}{\partial b_0}L(b_0,b_1) = -\frac{2}{n} \sum_{i=1}^n {(h_b(x^{(i)}) - y^{(i)})} $$
+$$ \frac{\partial}{\partial b_1}L(b_0,b_1) = -\frac{2}{n} \sum_{i=1}^n {(h_b(x^{(i)}) - y^{(i)})}x^{(i)} $$
+
+At each step, we update $b_0$ and $b_1$ using the following chain rules:
+
+$$ b_0 = b_0 - a\frac{\partial}{\partial b_0}L(b_0,b_1) $$
+$$ b_1 = b_1 - a\frac{\partial}{\partial b_1}L(b_0,b_1) $$
+
+where a is the learning rate.
