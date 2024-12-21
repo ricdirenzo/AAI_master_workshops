@@ -14,7 +14,7 @@ Data pre-processing is a crucial step when working with text data. It involves *
 ---
 
 ## About dataset
-The dataset contains a list of over one million news headlines published over a period of nineteen years, from 2003-02-19 to 2021-12-31. These data sourced from the reputable Australian news source ABC (Australian Broadcasting Corporation).
+The dataset contains a list of over three hundred thousand news headlines published over a period of 6 years, from 2015-01-01 to 2021-12-31. These data sourced from the reputable Australian news source ABC (Australian Broadcasting Corporation).
 
 &nbsp; 
 
