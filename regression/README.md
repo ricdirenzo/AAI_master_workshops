@@ -70,41 +70,41 @@ Under these conditions, the ordinary least squares (OLS) estimator of the coeffi
 
 Often this formulation are written in matrix notation as:
 
-$$ \textbf{y} = \textbf{X}b + e $$
+$$ \mathbf{y} = \mathbf{X}b + e $$
 
 where:
-- $\textbf{y}$ is a vector of observed values $y_i (i=1, \dots, n)$ of the variable called the target variable or dependent variable
-- $\textbf{X}$ is a matrix of row-vectors $\textbf{x}_i$ or of $n$-dimensional column-vectors $\textbf{x}_j$ which are known as regressors, explanatory variables or independent variables
+- $\mathbf{y}$ is a vector of observed values $y_i (i=1, \dots, n)$ of the variable called the target variable or dependent variable
+- $\mathbf{X}$ is a matrix of row-vectors $\mathbf{x}_i$ or of $n$-dimensional column-vectors $\mathbf{x}_j$ which are known as regressors, explanatory variables or independent variables
 - $b$ is a $(p+1)$-dimensional dimensional parameter vector, where $b_0$ is the intercept term and, in simple linear regression, $p=1$, $b_1$ is the regression slope
 - $e$ is a vector of values $e_i$ or residuals.
 
 The vector of residuals $e$ is given by:
 
-$$ e = \textbf{y} - \textbf{X}b $$
+$$ e = \mathbf{y} - \mathbf{X}b $$
 
 We can write the sum of squared residuals as:
 
-$$ e^Te = (\textbf{y} - \textbf{X}b)^T(\textbf{y} - \textbf{X}b) = \textbf{y}^T\textbf{y} - b^T\textbf{X}^T\textbf{y} - \textbf{y}^T\textbf{X}b + b^T\textbf{X}^T\textbf{X}b $$
+$$ e^\top e = (\mathbf{y} - \mathbf{X}b)^\top(\mathbf{y} - \mathbf{X}b) = \mathbf{y}^\top\mathbf{y} - b^\top\mathbf{X}^\top\mathbf{y} - \mathbf{y}^\top\mathbf{X}b + b^\top\mathbf{X}^\top\mathbf{X}b $$
 
-This development uses the fact that $\textbf{y}^T\textbf{X}b = (\textbf{y}^T\textbf{X}b)^T = b^T\textbf{X}^T\textbf{y}$
+This development uses the fact that $\mathbf{y}^\top\mathbf{X}b = (\mathbf{y}^\top\mathbf{X}b)^\top = b^\top\mathbf{X}^\top\mathbf{y}$
 
-$$ e^Te = \textbf{y}^T\textbf{y} - 2b^T\textbf{X}^T\textbf{y} + b^T\textbf{X}^T\textbf{X}b $$
+$$ e^\top e = \mathbf{y}^\top\mathbf{y} - 2b^\top\mathbf{X}^\top\mathbf{y} + b^\top\mathbf{X}^\top\mathbf{X}b $$
 
-To find the coefficients that minimizes the sum of squared residuals, we need to take the derivative of $e^Te$ with respect to $b$
+To find the coefficients that minimizes the sum of squared residuals, we need to take the derivative of $e^\top e$ with respect to $b$
 
-$$ \arg\min_{b} e^Te = \frac{\partial}{\partial b} (\textbf{y}^T\textbf{y} - 2b^T\textbf{X}^T\textbf{y} + b^T\textbf{X}^T\textbf{X}b) = 0 $$
+$$ \arg\min_{b} e^\top e = \frac{\partial}{\partial b} (\mathbf{y}^\top\mathbf{y} - 2b^\top\mathbf{X}^\top\mathbf{y} + b^\top\mathbf{X}^\top\mathbf{X}b) = 0 $$
 
-$$ 2\textbf{X}^T\textbf{X}b -2\textbf{X}^T\textbf{y} = 0 $$
+$$ 2\mathbf{X}^\top\mathbf{X}b -2\mathbf{X}^\top\mathbf{y} = 0 $$
 
-$$ \textbf{X}^T\textbf{X}b = \textbf{X}^T\textbf{y} $$
+$$ \mathbf{X}^\top\mathbf{X}b = \mathbf{X}^\top\mathbf{y} $$
 
-If the inverse of $\textbf{X}^T\textbf{X}$ exists, then pre-multiplyng both sides by the inverse gives us the following equation:
+If the inverse of $\mathbf{X}^\top\mathbf{X}$ exists, then pre-multiplyng both sides by the inverse gives us the following equation:
 
-$$ (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{X}b = (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} $$
+$$ (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{X}b = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y} $$
 
-We know that $(\textbf{X}^T\textbf{X})^{-1} \textbf{X}^T\textbf{X} = \textbf{I}$ identity matrix. This gives us:
+We know that $(\mathbf{X}^\top\mathbf{X})^{-1} \mathbf{X}^\top\mathbf{X} = \mathbf{I}$ identity matrix. This gives us:
 
-$$ \hat{b}_{OLS} = (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} $$
+$$ \hat{b}_{OLS} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y} $$
 
 &nbsp;
 
