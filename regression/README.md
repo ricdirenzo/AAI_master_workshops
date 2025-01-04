@@ -104,7 +104,7 @@ $$ (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{X}b = (\textbf{X}^T\textbf{X
 
 We know that $(\textbf{X}^T\textbf{X})^{-1} \textbf{X}^T\textbf{X} = \textbf{I}$ identity matrix. This gives us:
 
-$$ \hat{b} = (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} $$
+$$ \hat{b}_{OLS} = (\textbf{X}^T\textbf{X})^{-1}\textbf{X}^T\textbf{y} $$
 
 &nbsp;
 
