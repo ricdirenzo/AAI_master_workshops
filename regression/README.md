@@ -46,7 +46,7 @@ $$ \hat{b_1} = \frac{ \sigma_{x,y} }{ \sigma_{x}^2 } \qquad \hat{b_0} = \mu_y - 
 
 &nbsp;
 
-### Coefficient of determination
+### Evaluating model performance
 The coefficient of determination, knows as "_R squared_" and denoted $R^2$, is a measure of the goodness of fit of a model, i.e. of how well the regression predictions approximate the real data points. An $R^2$ of 1 indicates that the regression predictions perfectly fit the data. It is defined as the proportion of the variation in the dependent variable that is predictable from the independent variable(s).
 
 $$ R^2 = 1 - \frac{ \sum_{i=1}^{n} {e_i^2} }{ \sum_{i=1}^n {(y_i - \mu_y)^2} } = 1 - \frac{ SS_{\text{res}} }{ SS_{\text{tot}} }$$
