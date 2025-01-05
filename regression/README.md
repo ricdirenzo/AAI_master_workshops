@@ -59,7 +59,7 @@ where:
 
 ### Gauss–Markov assumptions
 In order to confirm the statistical significance of the choice of coefficients, it is necessary to make some hypotheses known as Gauss–Markov assumptions:
-- $\\{e_1, \dots, e_n\\}$ and $\\{x_1, \dots, x_n\\}$ are independent
+- $\mathbf{Cov}(X_i,e_j)=0$ (exogeneity of the regressor)
 - $\mathbf{E}[e_i]=0$
 - $\mathbf{Var}(e_i)=\sigma^2 \lt \infty \quad \forall i$ (homoscedastic)
 - $\mathbf{Cov}(e_i,e_j)=0 \quad \forall i \neq j$
