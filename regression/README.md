@@ -109,7 +109,7 @@ $$ \hat{b}_{OLS} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y} $$
 &nbsp;
 
 ## Gradient descent algorithm:
-The objective is to minimize the cost function (Mean Squared Error) using gradient descent. The cost function is given by:
+The objective is to minimize the Loss function (Mean Squared Error) using gradient descent. The Loss function is given by:
 
 $$ L(b_0,b_1) = \frac{1}{n} \sum_{i=1}^n {(y^{(i)} - h_b(x^{(i)}))^2} $$
 
