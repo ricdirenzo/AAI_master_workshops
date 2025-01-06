@@ -21,7 +21,7 @@ $$ y_i = b_0 + b_1x_i + e_i $$
 
 The coefficients $b_0$ and $b_1$ are estimated according to the Ordinary Least Squares (OLS) method to obtain a line that minimizes the sum of squared residuals.
 
-$$ d(b_0,b_1) = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n {(y_i-b_0-b_1x_i)^2} $$
+$$ d(b_0,b_1) := \sum_{i=1}^n e_i^2 = \sum_{i=1}^n {(y_i-b_0-b_1x_i)^2} $$
 
 Estimates are obtained by solving:
 
@@ -111,16 +111,16 @@ $$ \hat{b}_{OLS} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y} $$
 ## Gradient descent algorithm:
 The objective is to minimize the Loss function (Mean Squared Error) using gradient descent. The Loss function is given by:
 
-$$ L(b_0,b_1) = \frac{1}{n} \sum_{i=1}^n {(y^{(i)} - h_b(x^{(i)}))^2} $$
+$$ L(b_0,b_1) = \frac{1}{n} \sum_{i=1}^n {\left(y_i - h_b(x_i)\right)^2} $$
 
 where:
-- $h_b(x^{(i)}) = b_0 + b_1x^{(i)}$ is the hypothesis function
+- $h_b(x_i) = b_0 + b_1x_i$ is the hypothesis function
 - $n$ is the number of training examples.
 
 The gradients for $b_0$ and $b_1$ are computed as follows:
 
-$$ \frac{\partial}{\partial b_0}L(b_0,b_1) = -\frac{2}{n} \sum_{i=1}^n {(h_b(x^{(i)}) - y^{(i)})} $$
-$$ \frac{\partial}{\partial b_1}L(b_0,b_1) = -\frac{2}{n} \sum_{i=1}^n {(h_b(x^{(i)}) - y^{(i)})}x^{(i)} $$
+$$ \frac{\partial}{\partial b_0}L(b_0,b_1) = -\frac{2}{n} \sum_{i=1}^n {\left(y_i - h_b(x_i)\right)} $$
+$$ \frac{\partial}{\partial b_1}L(b_0,b_1) = -\frac{2}{n} \sum_{i=1}^n {\left(y_i - h_b(x_i)\right)x_i} $$
 
 At each step, we update $b_0$ and $b_1$ using the following chain rules:
 
