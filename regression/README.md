@@ -32,7 +32,7 @@ $$ \arg\min_{b_0,b_1} d(b_0,b_1) =
   \end{cases} $$
   
 $$ = \begin{cases}
-    -2 \sum_{i=1}^n {y_i-b_0-b_1x_i} = 0\\
+    -2 \sum_{i=1}^n {(y_i-b_0-b_1x_i)} = 0\\
     -2 \sum_{i=1}^n {(y_i-b_0-b_1x_i)x_i} = 0 
   \end{cases} $$
 
