@@ -1,130 +1,317 @@
-# Linear regression
-In statistics, linear regression is a model that estimates the linear relationship between a scalar response (dependent variable) and one or more explanatory variables (regressor or independent variable).
+# Multiple linear regression model
 
-Simple linear regression is a linear regression model with a single explanatory variable.
-
-## OLS Formulation
-We consider the following linear model
-
-$$ y = b_0 + b_1x + e $$
-
-where
-- $b_1$ is the slope of the line
-- $b_0$ is the y intercept
-- $e$ is the error term (residuals)
-
-Our goal is to find estimated values $\hat{b_0}$ and $\hat{b_1}$ for the parameters $b_0$ and $b_1$ which would provide the best fit for the data points.
-
-Suppose we observe $n$ data pairs and call them $\\{(xi, yi), i=1, \dots, n\\}$. We can describe the underlying relationship between $y_i$ and $x_i$ involving this error term $e_i$ by:
-
-$$ y_i = b_0 + b_1x_i + e_i $$
-
-The coefficients $b_0$ and $b_1$ are estimated according to the Ordinary Least Squares (OLS) method to obtain a line that minimizes the sum of squared residuals.
-
-$$ d(b_0,b_1) := \sum_{i=1}^n e_i^2 = \sum_{i=1}^n {(y_i-b_0-b_1x_i)^2} $$
-
-Estimates are obtained by solving:
-
-$$ \arg\min_{b_0,b_1} d(b_0,b_1) =
-  \begin{cases}
-    \frac{\partial}{\partial b_0}d(b_0,b_1) = 0\\
-    \frac{\partial}{\partial b_1}d(b_0,b_1) = 0 
-  \end{cases} $$
-  
-$$ = \begin{cases}
-    -2 \sum_{i=1}^n {(y_i-b_0-b_1x_i)} = 0\\
-    -2 \sum_{i=1}^n {(y_i-b_0-b_1x_i)x_i} = 0 
-  \end{cases} $$
-
-from which the following solutions are derived:
-
-$$ \hat{b_1} = \frac{ \sum_{i=1}^n {x_iy_i} - \frac{1}{n} \sum_{i=1}^n {x_i}\sum_{i=1}^n {y_i} }{ \sum_{i=1}^n {x_i^2} - \frac{1}{n} (\sum_{i=1}^n {x_i})^2 } \qquad \hat{b_0} = \frac{1}{n} \sum_{i=1}^n {y_i} - \frac{\hat{b_1}}{n} \sum_{i=1}^n {x_i}$$
-
-i.e. 
-
-$$ \hat{b_1} = \frac{ \sigma_{x,y} }{ \sigma_{x}^2 } \qquad \hat{b_0} = \mu_y - \hat{b_1} \mu_x $$
+A **multiple linear regression model** is a statistical technique used to predict a dependent variable based on multiple independent variables. It extends simple linear regression by considering multiple predictors.
 
 &nbsp;
 
-### Evaluating model performance
-The coefficient of determination, knows as "_R squared_" and denoted $R^2$, is a measure of the goodness of fit of a model, i.e. of how well the regression predictions approximate the real data points. An $R^2$ of 1 indicates that the regression predictions perfectly fit the data. It is defined as the proportion of the variation in the dependent variable that is predictable from the independent variable(s).
+### Formulation
 
-$$ R^2 = 1 - \frac{ \sum_{i=1}^{n} {e_i^2} }{ \sum_{i=1}^n {(y_i - \mu_y)^2} } = 1 - \frac{ SS_{\text{res}} }{ SS_{\text{tot}} }$$
+The multiple linear regression model with two predictors can be written as:
+
+$$
+\mathbf{y} = \mathbf{X} \mathbf{\beta} + \mathbf{\varepsilon}
+$$
+
+Where:
+
+- $\mathbf{y}$ is the vector of dependent variable observations, with size $n \times 1$, where $n$ is the number of observations (or samples).
+- $\mathbf{X}$ is the matrix of independent variables (or regressors), with size $n \times p$, where $p$ is the number of regressors. In this case, with two regressors (including the intercept term), the matrix will have one column for the intercept (1), one for $x_1$, and one for $x_2$, so $\mathbf{X}$ will have size $n \times 3$.
+- $\mathbf{\beta}$ is the vector of coefficients (parameters to estimate), with size $p \times 1$. In this case, $\mathbf{\beta}$ will be a vector of size $3 \times 1$ (including the intercept term).
+- $\mathbf{\varepsilon}$ is the vector of errors (or residuals), with size $n \times 1$, representing the difference between the observed and predicted values of the model.
+
+For the case with two regressors (including the intercept), the matrix $\mathbf{X}$ will look like this:
+
+$$
+\mathbf{X} = \begin{bmatrix} 
+1 & x_{11} & x_{12} \\ 
+1 & x_{21} & x_{22} \\ 
+\vdots & \vdots & \vdots \\ 
+1 & x_{n1} & x_{n2} 
+\end{bmatrix}_{(n \times 3)}
+$$
+
+And the vector $\mathbf{\beta}$ will be:
+
+$$
+\mathbf{\beta} = \begin{bmatrix} 
+\beta_0 \\ \beta_1 \\ \beta_2 
+\end{bmatrix}_{(3 \times 1)}
+$$
+
+Thus, the model becomes:
+
+$$
+\mathbf{y} =
+\begin{bmatrix} 
+y_1 \\ y_2 \\ \vdots \\ y_n 
+\end{bmatrix}_{(n \times 1)}
+= \begin{bmatrix} 
+1 & x_{11} & x_{12} \\ 
+1 & x_{21} & x_{22} \\ 
+\vdots & \vdots & \vdots \\ 
+1 & x_{n1} & x_{n2} 
+\end{bmatrix}_{(n \times 3)}
+\cdot
+\begin{bmatrix} 
+\beta_0 \\ \beta_1 \\ \beta_2 
+\end{bmatrix}_{(3 \times 1)}
++
+\begin{bmatrix} 
+\varepsilon_1 \\ \varepsilon_2 \\ \vdots \\ \varepsilon_n 
+\end{bmatrix}_{(n \times 1)}
+$$
+
+&nbsp;
+
+### OLS estimation 
+
+The goal is to find the line (or hyperplane in higher dimensions) that best fits the data by minimizing the **sum of squared errors** (cost function).
+
+$$
+\varepsilon = \mathbf{y} - \mathbf{X}\beta
+$$
+
+The cost function to minimize is the sum of squared errors:
+
+$$
+J(\beta) = \varepsilon^\top \varepsilon = (\mathbf{y} - \mathbf{X} \beta)^\top (\mathbf{y} - \mathbf{X} \beta)
+$$
+
+To find the minimum of the cost function, it is necessary to calculate the derivative of $ J(\beta) $ with respect to $ \beta $ and set it to zero. 
+
+Expand the cost function:
+
+$$
+J(\beta) = (\mathbf{y} - \mathbf{X} \beta)^\top (\mathbf{y} - \mathbf{X} \beta) = \mathbf{y}^\top \mathbf{y} - \mathbf{y}^\top \mathbf{X} \beta - \beta^\top \mathbf{X}^\top \mathbf{y} + \beta^\top \mathbf{X}^\top \mathbf{X} \beta
+$$
+
+Since $ \mathbf{y}^\top \mathbf{X} \beta $ is a scalar, it follows that $ \mathbf{y}^\top \mathbf{X} \beta = \beta^\top \mathbf{X}^top \mathbf{y} $. So the cost function becomes:
+
+$$
+J(\beta) = \mathbf{y}^\top \mathbf{y} - 2 \beta^\top \mathbf{X}^\top \mathbf{y} + \beta^\top \mathbf{X}^\top \mathbf{X} \beta
+$$
+
+Now calculate the derivative of $ J(\beta) $ with respect to $ \beta $:
+
+$$
+\frac{\partial J(\beta)}{\partial \beta} = -2 \mathbf{X}^\top \mathbf{y} + 2 \mathbf{X}^\top \mathbf{X} \beta
+$$
+
+Set the derivative equal to zero to find the estimated coefficients:
+
+$$
+-2 \mathbf{X}^\top \mathbf{y} + 2 \mathbf{X}^\top \mathbf{X} \beta = 0
+$$
+
+Solve for $ \beta $:
+
+$$
+\mathbf{X}^\top \mathbf{X} \beta = \mathbf{X}^\top \mathbf{y}
+$$
+
+$$
+\hat{\beta}_{\text{OLS}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
+$$
+
+This is the **Ordinary Least Squares (OLS)** formula for estimating the coefficients $ \beta $. This vector contains the estimates of $ \beta_0 $, $ \beta_1 $, and $ \beta_2 $, which are the coefficients of the multiple linear regression model.
+
+&nbsp;
+
+### Goodness of fit measure 
+
+The coefficient of determination $ R^2 $ is a measure of how well the model fits the data. It is calculated as:
+
+$$
+R^2 = 1 - \frac{\text{Sum of Squared Errors (SSE)}}{\text{Total Sum of Squares (SST)}}
+$$
+
+Where:
+- The **Total Sum of Squares** (SST) measures the total variability in the data relative to the mean of $ y $:
+
+    $$
+    \text{SST} = \sum_{i=1}^n (y_i - \bar{y})^2
+    $$
+    
+    with $ \bar{y} $ being the mean of $ y $.
+
+- The **Sum of Squared Errors** (SSE) measures the variability not explained by the model, i.e., the sum of the squared differences between the observed values and the predicted values:
+
+    $$
+    \text{SSE} = \sum_{i=1}^n (y_i - \hat{y}_i)^2
+    $$
+    
+    where $ \hat{y}_i $ is the predicted value for $ y_i $.
+
+
+#### Interpretation of $ R^2 $
+
+The value of $ R^2 $ ranges from 0 to 1:
+- $ R^2 = 1 $ means the model perfectly explains the variability in the data.
+- $ R^2 = 0 $ means the model explains none of the variability in the data.
+
+A high $ R^2 $ value indicates that a large portion of the variability in $ y $ is explained by the independent variables in the model, while a low value suggests the model has limited predictive power.
+
+&nbsp;
+
+### Gauss–Markov assumptions 
+The Gauss-Markov assumptions are a set of conditions under which the Ordinary Least Squares (OLS) estimator $ \hat{\beta}_{\text{OLS}} $ is the Best Linear Unbiased Estimator (BLUE).
+
+#### Zero conditional mean 
+The expected value of the residuals conditional on the independent variables should be zero:
+
+$$ \mathbb{E}(\varepsilon|\mathbf{X}) = 0 $$
+
+This assumption ensures the residuals are random and not linked to the independent variables. In other words, the regressors must be uncorrelated with the residuals i.e. 
+
+$$ \text{Cov}(x_i,\varepsilon_i) = 0 \quad \forall i $$
+
+#### Homoscedasticity 
+The residuals should have constant variance across all observations.
+
+$$ \text{Var}(\varepsilon|\mathbf{X}) = \sigma \mathbf{I} $$
+
+where $ \mathbf{I} $ is the identity matrix. This implies that the residuals are equally spread out across all levels of the independent variables.
+
+#### No autocorrelation 
+The residuals should be uncorrelated with each other. This means that for all $ i \neq j $, the covariance between the residuals $ \varepsilon_i $ and $ \varepsilon_j $ should be zero: 
+
+$$ \text{Cov}(\varepsilon_i,\varepsilon_j|\mathbf{X}) = 0 \quad i \neq j $$
+
+#### Normality of residuals (optional) 
+The residuals should be normally distributed:
+
+$$ \varepsilon \sim N(0,\sigma \mathbf{I}) $$
+
+While this assumption is not necessary for the OLS estimator to be BLUE, it is often assumed for the purpose of hypothesis testing. 
+
+---
+
+# Feed-Forward Neural Network 
+
+A **Feed-Forward Neural Network (FFNN)** consists of layers of neurons where information flows in one direction: from the input layer through hidden layers and finally to the output layer. Each layer processes the input data by applying a weighted sum, followed by an activation function. For this task, we focus on a network with one hidden layer, using **RReLU** as the activation function.
+
+&nbsp;
+
+### Network structure
+
+1. **Input layer**. The input to the network is a vector $ \mathbf{x} \in \mathbb{R}^n $, where $ n $ is the number of input features.
+2. **Hidden layer**. This layer consists of $ h $ neurons.
+3. **Output layer**. The output layer contains $ m $ neurons, and the network produces an output vector $ \mathbf{y} \in \mathbb{R}^m $.
+
+&nbsp;
+
+### Notation
+- $ \mathbf{W}^{(1)} \in \mathbb{R}^{h \times n} $ is the weight matrix between the input and hidden layers.
+- $ \mathbf{b}^{(1)} \in \mathbb{R}^h $ is the bias vector for the hidden layer.
+- $ \mathbf{W}^{(2)} \in \mathbb{R}^{m \times h} $ is the weight matrix between the hidden and output layers.
+- $ \mathbf{b}^{(2)} \in \mathbb{R}^m $ is the bias vector for the output layer.
+- $ \mathbf{x} \in \mathbb{R}^n $ is the input vector.
+- $ \mathbf{a}^{(1)} \in \mathbb{R}^h $ represents the activations of the hidden layer.
+- $ \mathbf{a}^{(2)} \in \mathbb{R}^m $ represents the output activations.
+
+&nbsp;
+
+### Steps 
+
+#### 1. Input to Hidden Layer
+
+The input vector $ \mathbf{x} $ is multiplied by the weight matrix $ \mathbf{W}^{(1)} $ and added to the bias vector $ \mathbf{b}^{(1)} $. This gives the pre-activation values for the hidden layer:
+
+$$
+z_i^{(1)} = \sum_{j=1}^{n} W_{ij}^{(1)} x_j + b_i^{(1)}, \quad \text{for each hidden neuron } i = 1, \ldots, h
+$$
+
+#### 2. Activation with RReLU
+
+The RReLU activation function is applied to the pre-activation values. For each neuron $ i $ in the hidden layer, the output is computed as:
+
+$$
+a_i^{(1)} = \begin{cases}
+\max(0, z_i^{(1)}) & \text{if } z_i^{(1)} \geq 0 \\
+\alpha_i z_i^{(1)} & \text{if } z_i^{(1)} < 0
+\end{cases}
+$$
+
+Here, $ \alpha_i $ is a randomly chosen value from a uniform distribution $ \alpha_i \sim \text{Uniform}(l, u) $, where $ l $ and $ u $ are the lower and upper bounds of the distribution.
+
+#### 3. Hidden to Output Layer
+
+The activations from the hidden layer $ \mathbf{a}^{(1)} $ are then multiplied by the weight matrix $ \mathbf{W}^{(2)} $ and added to the bias vector $ \mathbf{b}^{(2)} $. This gives the pre-activation for the output layer:
+
+$$
+z_j^{(2)} = \sum_{i=1}^{h} W_{ji}^{(2)} a_i^{(1)} + b_j^{(2)}, \quad \text{for each output neuron } j = 1, \ldots, m
+$$
+
+#### 4. Output Layer (Final Prediction)
+
+The final output of the network is calculated from the pre-activation values of the output layer. If no activation function is applied in the output layer:
+
+$$
+y_j = z_j^{(2)}, \quad \text{for each output neuron } j = 1, \ldots, m
+$$
+
+By following these steps, the network processes input data and makes predictions through forward propagation.
+
+&nbsp;
+
+<p align="center">Below is the graphical representation of a neural network with 2 input features, 1 hidden layer with 4 neurons, and 1 output.<br /><br />
+  <img src="https://www.researchgate.net/profile/Osama-Mohsen/publication/355094551/figure/fig2/AS:1076573407059968@1633686510430/A-neural-network-with-2-input-features-1-hidden-layer-and-1-output-The-derived-features.png" alt="Rete Neurale" style="width:67%;"><br /><br />
+    The derived features of the hidden layer are created from linear combinations of the inputs, and the output is created as a linear combination of these derived features.
+</p>
+
+<br />
+
+### Model training and loss tracking 
+
+The training process, for a regression model, uses **Mean Squared Error (MSE)** as the loss function and **Stochastic Gradient Descent (SGD)** as the optimizer.
+
+#### Mean Squared Error (MSE) 
+
+The MSE loss function measures the average squared differences between actual $ y_i $ and predicted $ \hat{y_i} $ values:
+
+$$ \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 $$ 
+
+#### Stochastic Gradient Descent (SGD)
+
+The model parameters $ \theta $ are updated using:
+
+$$ \theta \leftarrow \theta - \eta \nabla_{\theta} J(\theta) $$
 
 where:
-- $SS_\text{res}$ is called residual sum of squares
-- $SS_\text{tot}$ is called total sum of squares (proportional to the variance of the data)
+- $ \eta $ is the learning rate
+- $ \nabla_{\theta} J(\theta) $ is the gradient of the loss function with respect to $ \theta $.
 
-&nbsp;
+#### Learning rate scheduler 
+The learning rate is adjusted dynamically using `StepLR` scheduler (a powerful tool in PyTorch for adjusting the learning rate during training):
 
-### Gauss–Markov assumptions
-In order to confirm the statistical significance of the choice of coefficients, it is necessary to make some hypotheses known as Gauss–Markov assumptions:
-- $\mathbf{Cov}(X_i,e_j)=0$ (exogeneity of the regressor)
-- $\mathbf{E}[e_i]=0$
-- $\mathbf{Var}(e_i)=\sigma^2 \lt \infty \quad \forall i$ (homoscedastic)
-- $\mathbf{Cov}(e_i,e_j)=0 \quad \forall i \neq j$ (no autocorrelation)
-
-Under these conditions, the ordinary least squares (OLS) estimator of the coefficients of a linear regression model is the best linear unbiased estimator (_BLUE_).
-
-&nbsp;
-
-Often this formulation are written in matrix notation as:
-
-$$ \mathbf{y} = \mathbf{X}b + e $$
+$$ \eta_t = \eta_0 \cdot \gamma^{\lfloor \frac{t}{\text{step size}} \rfloor} $$
 
 where:
-- $\mathbf{y}$ is a vector of observed values $y_i (i=1, \dots, n)$ of the variable called the target variable or dependent variable
-- $\mathbf{X}$ is a matrix of row-vectors $\mathbf{x}_i$ or of $n$-dimensional column-vectors $\mathbf{x}_j$ which are known as regressors, explanatory variables or independent variables
-- $b$ is a $(p+1)$-dimensional dimensional parameter vector, where $b_0$ is the intercept term and, in simple linear regression, $p=1$, $b_1$ is the regression slope
-- $e$ is a vector of values $e_i$ or residuals.
+- $ \eta_0 $ is the initial learning rate
+- $ \gamma = 0.5 $ is the decay factor
+- $ \lfloor \frac{t}{\text{step size}} \rfloor $ represents the number of completed step intervals.
 
-The vector of residuals $e$ is given by:
+#### Training Loop
+The model is trained over 200 epochs, performing the following steps in each epoch: 
 
-$$ e = \mathbf{y} - \mathbf{X}b $$
+1. **Compute predictions**
 
-We can write the sum of squared residuals as:
+   $$ \hat{Y} = f(X; \theta) $$
 
-$$ e^\top e = (\mathbf{y} - \mathbf{X}b)^\top(\mathbf{y} - \mathbf{X}b) = \mathbf{y}^\top\mathbf{y} - b^\top\mathbf{X}^\top\mathbf{y} - \mathbf{y}^\top\mathbf{X}b + b^\top\mathbf{X}^\top\mathbf{X}b $$
+2. **Calculate Loss**
 
-This development uses the fact that $\mathbf{y}^\top\mathbf{X}b = (\mathbf{y}^\top\mathbf{X}b)^\top = b^\top\mathbf{X}^\top\mathbf{y}$
+   $$ J(\theta) = \frac{1}{n} \sum (y_i - \hat{y}_i)^2 $$
 
-$$ e^\top e = \mathbf{y}^\top\mathbf{y} - 2b^\top\mathbf{X}^\top\mathbf{y} + b^\top\mathbf{X}^\top\mathbf{X}b $$
+3. **Compute gradients**
 
-To find the coefficients that minimizes the sum of squared residuals, we need to take the derivative of $e^\top e$ with respect to $b$
+   $$ \nabla_{\theta} J(\theta) = \frac{2}{n} \sum (y_i - \hat{y}_i) \cdot \frac{\partial \hat{y}_i}{\partial \theta} $$
 
-$$ \arg\min_{b} e^\top e = \frac{\partial}{\partial b} (\mathbf{y}^\top\mathbf{y} - 2b^\top\mathbf{X}^\top\mathbf{y} + b^\top\mathbf{X}^\top\mathbf{X}b) = 0 $$
+4. **Update parameters**
 
-$$ 2\mathbf{X}^\top\mathbf{X}b -2\mathbf{X}^\top\mathbf{y} = 0 $$
+   $$ \theta \leftarrow \theta - \eta \nabla_{\theta} J(\theta) $$
 
-$$ \mathbf{X}^\top\mathbf{X}b = \mathbf{X}^\top\mathbf{y} $$
+5. **Adjust learning rate**
 
-If the inverse of $\mathbf{X}^\top\mathbf{X}$ exists, then pre-multiplyng both sides by the inverse gives us the following equation:
+   $$ \eta_t = \eta_0 \cdot \gamma^{\lfloor \frac{t}{\text{step size}} \rfloor} $$
 
-$$ (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{X}b = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y} $$
-
-We know that $(\mathbf{X}^\top\mathbf{X})^{-1} \mathbf{X}^\top\mathbf{X} = \mathbf{I}$ identity matrix. This gives us:
-
-$$ \hat{b}_{OLS} = (\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y} $$
-
-&nbsp;
-
-## Gradient descent algorithm:
-The objective is to minimize the Loss function (Mean Squared Error) using gradient descent. The Loss function is given by:
-
-$$ L(b_0,b_1) = \frac{1}{n} \sum_{i=1}^n {\left(y_i - h_b(x_i)\right)^2} $$
-
-where:
-- $h_b(x_i) = b_0 + b_1x_i$ is the hypothesis function
-- $n$ is the number of training examples.
-
-The gradients for $b_0$ and $b_1$ are computed as follows:
-
-$$ \frac{\partial}{\partial b_0}L(b_0,b_1) = -\frac{2}{n} \sum_{i=1}^n {\left(y_i - h_b(x_i)\right)} $$
-$$ \frac{\partial}{\partial b_1}L(b_0,b_1) = -\frac{2}{n} \sum_{i=1}^n {\left(y_i - h_b(x_i)\right)x_i} $$
-
-At each step, we update $b_0$ and $b_1$ using the following chain rules:
-
-$$ b_0 = b_0 - a\frac{\partial}{\partial b_0}L(b_0,b_1) $$
-$$ b_1 = b_1 - a\frac{\partial}{\partial b_1}L(b_0,b_1) $$
-
-where a is the learning rate.
+This approach ensures a stable training process by gradually decreasing the learning rate while optimizing model weights using gradient descent.
