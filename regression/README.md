@@ -95,7 +95,7 @@ $$
 J(\beta) = (\mathbf{y} - \mathbf{X} \beta)^\top (\mathbf{y} - \mathbf{X} \beta) = \mathbf{y}^\top \mathbf{y} - \mathbf{y}^\top \mathbf{X} \beta - \beta^\top \mathbf{X}^\top \mathbf{y} + \beta^\top \mathbf{X}^\top \mathbf{X} \beta
 $$
 
-Since $\mathbf{y}^\top \mathbf{X} \beta$ is a scalar, it follows that $\mathbf{y}^\top \mathbf{X} \beta = \beta^\top \mathbf{X}^\top \mathbf{y}$. So the cost function becomes:
+Since $\mathbf{y}^\top \mathbf{X} \beta$ is a scalar, it follows that $\mathbf{y}^\top \mathbf{X} \beta = (\mathbf{y}^\top \mathbf{X} \beta)^\top = \beta^\top \mathbf{X}^\top \mathbf{y}$. So the cost function becomes:
 
 $$
 J(\beta) = \mathbf{y}^\top \mathbf{y} - 2 \beta^\top \mathbf{X}^\top \mathbf{y} + \beta^\top \mathbf{X}^\top \mathbf{X} \beta
@@ -113,14 +113,28 @@ $$
 -2 \mathbf{X}^\top \mathbf{y} + 2 \mathbf{X}^\top \mathbf{X} \beta = 0
 $$
 
-Solve for $\beta$:
+Solve for $\beta$ (unknown):
 
 $$
 \mathbf{X}^\top \mathbf{X} \beta = \mathbf{X}^\top \mathbf{y}
 $$
 
+If the inverse of $\mathbf{X}^\top \mathbf{X}$ exists, then pre-multiplying both sides by this inverse gives:
+
 $$
-\hat{\beta}_{\text{OLS}} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
+(\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{X} \beta = (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{y}
+$$
+
+Since by definition $(\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{X} = \mathbf{I}$ identity matrix: 
+
+$$
+\mathbf{I}\beta = (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{y}
+$$
+
+So:
+
+$$
+\beta = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
 $$
 
 This is the **Ordinary Least Squares (OLS)** formula for estimating the coefficients $\beta$. This vector contains the estimates of $\beta_0$, $\beta_1$, and $\beta_2$, which are the coefficients of the multiple linear regression model.
@@ -138,7 +152,7 @@ $$
 Where:
 - The **Total Sum of Squares** (SST) measures the total variability in the data relative to the mean of $y$: $\text{SST} = \sum_{i=1}^{n} {(y_i - \bar{y})^2}$ with $\bar{y}$ being the mean of $y$.
 
-- The **Sum of Squared Errors** (SSE) measures the variability not explained by the model, i.e., the sum of the squared differences between the observed values and the predicted values: $$\text{SSE} = \sum_{i=1}^{n} {(y_i - \hat{y}_i)^2}$$ where $\hat{y}_i$ is the predicted value for $y_i$.
+- The **Sum of Squared Errors** (SSE) measures the variability not explained by the model, i.e., the sum of the squared differences between the observed values and the predicted values: $\text{SSE} = \sum_{i=1}^{n} {(y_i - \hat{y}_i)^2}$ where $\hat{y}_i$ is the predicted value for $y_i$.
 
 
 #### Interpretation of $R^2$
@@ -152,13 +166,13 @@ A high $R^2$ value indicates that a large portion of the variability in $y$ is e
 &nbsp;
 
 ### Gauss–Markov assumptions 
-The Gauss-Markov assumptions are a set of conditions under which the Ordinary Least Squares (OLS) estimator $\hat{\beta}_{\text{OLS}}$ is the Best Linear Unbiased Estimator (BLUE).
+The Gauss-Markov assumptions are a set of conditions under which the Ordinary Least Squares (OLS) estimator $\beta_{\text{OLS}}$ is the Best Linear Unbiased Estimator (BLUE).
 
 #### Zero conditional mean 
 The expected value of the residuals conditional on the independent variables should be zero:
 
-$$
-\mathbb{E}(\varepsilon|\mathbf{X}) = 0
+$$ 
+\mathbb{E}(\varepsilon|\mathbf{X}) = 0 
 $$
 
 This assumption ensures the residuals are random and not linked to the independent variables. In other words, the regressors must be uncorrelated with the residuals i.e. 
@@ -190,4 +204,4 @@ $$
 \varepsilon \sim N(0,\sigma \mathbf{I})
 $$
 
-While this assumption is not necessary for the OLS estimator to be BLUE, it is often assumed for the purpose of hypothesis testing.
+While this assumption is not necessary for the OLS estimator to be BLUE, it is often assumed for the purpose of hypothesis testing. 
