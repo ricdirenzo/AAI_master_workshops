@@ -22,12 +22,12 @@ Where:
 For the case with two regressors (including the intercept), the matrix $\mathbf{X}$ will look like this:
 
 $$
-\mathbf{X} = \begin{pmatrix} 
+\mathbf{X} = \begin{bmatrix} 
 1 & x_{11} & x_{12} \\ 
 1 & x_{21} & x_{22} \\ 
 \vdots & \vdots & \vdots \\ 
 1 & x_{n1} & x_{n2} 
-\end{pmatrix}
+\end{bmatrix}
 $$
 
 And the vector $\mathbf{\beta}$ will be:
