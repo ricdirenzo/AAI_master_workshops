@@ -27,7 +27,7 @@ $$
 1 & x_{21} & x_{22} \\ 
 \vdots & \vdots & \vdots \\ 
 1 & x_{n1} & x_{n2} 
-\end{bmatrix}
+\end{bmatrix}_{n \times 3}
 $$
 
 And the vector $\mathbf{\beta}$ will be:
@@ -37,7 +37,7 @@ $$
 \beta_0 \\ 
 \beta_1 \\ 
 \beta_2 
-\end{bmatrix}
+\end{bmatrix}_{3 \times 1}
 $$
 
 Thus, the model becomes:
@@ -47,28 +47,32 @@ $$
 \begin{bmatrix} 
 y_1 \\ 
 y_2 \\ 
-\vdots \\ 
-y_n 
-\end{bmatrix} = 
+\vdots 
+\\ y_n 
+\end{bmatrix}_
+{n \times 1} = 
 \begin{bmatrix} 
 1 & x_{11} & x_{12} \\ 
 1 & x_{21} & x_{22} \\ 
 \vdots & \vdots & \vdots \\ 
 1 & x_{n1} & x_{n2} 
-\end{bmatrix}
+\end{bmatrix}_
+{n \times 3}
 \cdot
 \begin{bmatrix} 
 \beta_0 \\ 
 \beta_1 \\ 
 \beta_2 
-\end{bmatrix}
+\end{bmatrix}_
+{3 \times 1}
 +
 \begin{bmatrix} 
 \varepsilon_1 \\ 
 \varepsilon_2 \\ 
 \vdots \\ 
 \varepsilon_n 
-\end{bmatrix}
+\end{bmatrix}_
+{n \times 1}
 $$
 
 &nbsp;
