@@ -19,28 +19,7 @@ Where:
 - $\mathbf{\beta}$ is the vector of coefficients (parameters to estimate), with size $p \times 1$. In this case, $\mathbf{\beta}$ will be a vector of size $3 \times 1$ (including the intercept term).
 - $\mathbf{\varepsilon}$ is the vector of errors (or residuals), with size $n \times 1$, representing the difference between the observed and predicted values of the model.
 
-For the case with two regressors (including the intercept), the matrix $\mathbf{X}$ will look like this:
-
-$$
-\mathbf{X} = \begin{bmatrix} 
-1 & x_{11} & x_{12} \\ 
-1 & x_{21} & x_{22} \\ 
-\vdots & \vdots & \vdots \\ 
-1 & x_{n1} & x_{n2} 
-\end{bmatrix}_{n \times 3}
-$$
-
-And the vector $\mathbf{\beta}$ will be:
-
-$$
-\mathbf{\beta} = \begin{bmatrix} 
-\beta_0 \\ 
-\beta_1 \\ 
-\beta_2 
-\end{bmatrix}_{3 \times 1}
-$$
-
-Thus, the model becomes:
+For the case with two regressors (including the intercept), the model looks like the following:
 
 $$
 \mathbf{y} =
