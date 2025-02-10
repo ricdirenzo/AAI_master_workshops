@@ -51,7 +51,7 @@ L'addestramento di una FFNN consiste in due fasi:
    - una trasformazione lineare (input → livello nascosto)
    - normalizzazione batch
    - funzione di attivazione
-   - una trasformazione lineare (livello nascosto → output <br /><br />
+   - una trasformazione lineare (livello nascosto → output) <br /><br />
 
 3. **Back propagation**
    una volta ottenuta la predizione, vengono:
